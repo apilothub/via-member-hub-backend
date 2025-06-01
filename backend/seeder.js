@@ -12,7 +12,7 @@ import categories from './data/category.js'
 
 dotenv.config()
 
-connectDB()
+connectDB();
 
 const importData = async () => {
   try {
