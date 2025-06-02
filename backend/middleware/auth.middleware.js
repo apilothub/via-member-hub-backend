@@ -7,7 +7,7 @@ const checkToken = async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
 
     try {
-      const decoded = auth.verifyAccessToken(token); // Giả sử hàm này trả về payload nếu hợp lệ
+      const decoded =await auth.verifyAccessToken(token); // Giả sử hàm này trả về payload nếu hợp lệ
 
       if (!decoded) {
         return res.status(401).json({ message: 'Invalid token' });
@@ -30,7 +30,7 @@ const checkTokenFE = async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
 
     try {
-      const decoded = auth.verifyAccessTokenFE(token); // Giả sử hàm này trả về payload nếu hợp lệ
+      const decoded =await auth.verifyAccessTokenFE(token); // Giả sử hàm này trả về payload nếu hợp lệ
 
       if (!decoded) {
         return res.status(401).json({ message: 'Invalid token' });
