@@ -1,24 +1,24 @@
-const db = require('../utils/ConnectDB.js');
-
+const pool = require('../utils/ConnectDB');
 const getAllUsers = async () => {
     try {
-        const [results] = await db.promise().query('SELECT * FROM vietnamisawsome.community_members');
-        return results;
-    } catch (err) {
-        throw err;
+        const query = "SELECT * FROM user_profile";
+        const [rows] = await pool.query(query);
+        return rows;
     }
-};
-
-const getUserById = async (id) => {
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+}
+const getUsers = async (id) => {
     try {
-        const [results] = await db.promise().query('SELECT * FROM vietnamisawsome.community_members WHERE community_member_id = ?', [id]);
-        return results[0];
-    } catch (err) {
-        throw err;
+        const query = "SELECT * FROM user_profile where id = ?";
+        const [rows] = await pool.query(query,[id]);
+        return rows;
     }
-};
-
-module.exports = {
-    getAllUsers,
-    getUserById,
-};
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+}
+module.exports = {getAllUsers, getUsers}
