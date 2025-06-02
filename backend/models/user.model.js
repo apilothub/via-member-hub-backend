@@ -1,45 +1,24 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+const db = require('../utils/ConnectDB.js');
 
-const userSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
+const getAllUsers = async () => {
+    try {
+        const [results] = await db.promise().query('SELECT * FROM vietnamisawsome.community_members');
+        return results;
+    } catch (err) {
+        throw err;
+    }
+};
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+const getUserById = async (id) => {
+    try {
+        const [results] = await db.promise().query('SELECT * FROM vietnamisawsome.community_members WHERE community_member_id = ?', [id]);
+        return results[0];
+    } catch (err) {
+        throw err;
+    }
+};
 
-    password: {
-      type: String,
-      required: true,
-    },
-
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-  },
-  { timestamps: true }
-);
-
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-}
-
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next();
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-})
-
-const User = mongoose.model('User', userSchema);
-export default User;
+module.exports = {
+    getAllUsers,
+    getUserById,
+};
