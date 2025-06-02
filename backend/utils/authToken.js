@@ -13,4 +13,11 @@ const verifyAccessToken = (token) => {
     return null;
   }
 }
-module.exports = {generateAccessToken, verifyAccessToken};
+const verifyAccessTokenFE = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET2);
+  } catch (error) {
+    return null;
+  }
+}
+module.exports = {generateAccessToken, verifyAccessToken, verifyAccessTokenFE};
