@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/user.model.js'
-import generateToken from '../utils/generateToken.js'
+import authToken from '../utils/authToken.js'
 import { validate as validateEmail } from 'email-validator';
 
 
@@ -24,7 +24,7 @@ const authUser = asyncHandler(async (req, res) => {
     name: user.name,
     email: user.email.toLowerCase(),
     isAdmin: user.isAdmin,
-    token: generateToken(user._id),
+    token: authToken(user._id),
   });
 
 });
@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name: user.name,
     email: user.email.toLowerCase(),
     isAdmin: user.isAdmin,
-    token: generateToken(user._id),
+    token: authToken(user._id),
   });
 
 });
@@ -113,7 +113,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     name: updatedUser.name,
     email: updatedUser.email.toLowerCase(),
     isAdmin: updatedUser.isAdmin,
-    token: generateToken(updatedUser._id),
+    token: authToken(updatedUser._id),
   });
 });
 
