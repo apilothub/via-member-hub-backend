@@ -15,7 +15,7 @@ const getAllListEvent = asyncHandler(async (req, res) => {
     page,
     limit,
     keyword,
-    searchableField: 'name'
+    searchableField: 'ten_events'
   });
 
   res.json({
