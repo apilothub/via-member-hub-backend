@@ -5,6 +5,7 @@ const sequelize = require('./config/database');
 const challengeRoutes = require('./routes/challengeRoutes');
 const userRouter = require('./routes/userRouter');
 const eventRouter = require('./routes/event.routes.js');
+const {notFound, errorHandler} = require('./middleware/error.middleware')
 
 
 require('dotenv').config();
@@ -21,6 +22,9 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/users', userRouter);
 app.use('/api/events', eventRouter);
+
+app.use(notFound)
+app.use(errorHandler)
 
 // Sync Sequelize models with database
 sequelize.sync({ force: false }).then(() => {
