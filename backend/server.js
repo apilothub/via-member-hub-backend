@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
-//const challengeRoutes = require('./routes/challengeRoutes');
-//const userRouter = require('./routes/userRouter');
+
 const eventRouter = require('./routes/event.routes.js');
 
 require('dotenv').config();
@@ -15,8 +14,7 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 
 app.get('/', (req, res) => res.send('Hello World!'));
-//app.use('/api/challenges', challengeRoutes);
-//app.use('/api/users', userRouter);
+
 app.use('/api/events', eventRouter);
 
 // Sync Sequelize models with database
