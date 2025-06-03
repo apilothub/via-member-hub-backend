@@ -1,6 +1,6 @@
 const Event = require('../models/event.model');
 const asyncHandler = require('express-async-handler');
-const { paginateWithSearch } = require('../repositories/paginate.repository');
+const { paginateWithSearch } = require('../repositories/paginate.repositories');
 
 // @desc Fetch Event
 // @route GET /api/event
