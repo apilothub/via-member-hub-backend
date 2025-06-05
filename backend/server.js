@@ -5,6 +5,7 @@ const sequelize = require('./config/database');
 const challengeRoutes = require('./routes/challengeRoutes');
 const userRouter = require('./routes/userRouter');
 const eventRouter = require('./routes/event.routes.js');
+const tokenRouter=require('./routes/tokenRoutes.js')
 const {notFound, errorHandler} = require('./middleware/error.middleware')
 
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/users', userRouter);
 app.use('/api/events', eventRouter);
+app.use('/api/token', eventRouter);
+
 
 app.use(notFound)
 app.use(errorHandler)
