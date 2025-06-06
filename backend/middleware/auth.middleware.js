@@ -4,22 +4,20 @@ const checkToken = () => {
         try {
             const authHeader = req.headers.authorization;
             if (!authHeader || !authHeader.startsWith('Bearer ')) {
-                return res.status(401).json("Không có token, vui lòng đăng nhập!");
+                return res.status(401).json("No token, please login!");
             }
 
             const token = authHeader.split(' ')[1];
+            const decoded = auth.verifyAccessToken(token);
 
-            const decoded = await auth.verifyAccessTokenFE(token);
             if (!decoded) {
-                return res.status(401).json("Token không hợp lệ");
+                return res.status(401).json("Invalid Token");
             }
 
-            // Bước 3: Gắn thông tin user vào request
-            req.user = decoded;
-            next();
+            next(); // cho phép đi tiếp nếu token hợp lệ
         } catch (error) {
-            console.error("Lỗi xác thực FE token:", error);
-            return res.status(500).json("Lỗi server trong quá trình xác thực token");
+            console.error("Token authentication error:", error);
+            return res.status(500).json("Server error during token authentication");
         }
     };
 };
@@ -30,21 +28,21 @@ const checkTokenFE = () => {
         try {
             const authHeader = req.headers.authorization;
             if (!authHeader || !authHeader.startsWith('Bearer ')) {
-                return res.status(401).json("Không có token, vui lòng đăng nhập!");
+                return res.status(401).json("No token, please login!");
             }
 
             const token = authHeader.split(' ')[1];
 
             const decoded = await auth.verifyAccessTokenFE(token);
             if (!decoded) {
-                return res.status(401).json("Token không hợp lệ");
+                return res.status(401).json("Invalid Token");
             }
 
             req.data = decoded;
             next();
         } catch (error) {
-            console.error("Lỗi xác thực FE token:", error);
-            return res.status(500).json("Lỗi server trong quá trình xác thực token");
+            console.error("Token authentication error:", error);
+            return res.status(500).json("Server error during token authentication");
         }
     };
 };
