@@ -14,7 +14,7 @@ const checkToken = () => {
                 return res.status(401).json("Invalid Token");
             }
 
-            next(); // cho phép đi tiếp nếu token hợp lệ
+            next(); 
         } catch (error) {
             console.error("Token authentication error:", error);
             return res.status(500).json("Server error during token authentication");
