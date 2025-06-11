@@ -32,4 +32,6 @@ sequelize
         console.error('Lỗi kết nối database:', err);
     });
 
+
 module.exports = sequelize;
+

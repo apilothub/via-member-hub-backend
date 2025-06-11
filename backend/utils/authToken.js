@@ -8,16 +8,24 @@ const generateAccessToken = (user) => {
 
 const verifyAccessToken = (token) => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    if (payload.key === process.env.SECRET_KEY) {
+      return true;
+    }
+    return false;
   } catch (error) {
     return null;
   }
-}
+};
 const verifyAccessTokenFE = (token) => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET2);
+    const payload = jwt.verify(token, process.env.JWT_SECRET2);
+    if (payload.key === process.env.SECRET_KEY2) {
+      return true;
+    }
+    return false;
   } catch (error) {
     return null;
   }
-}
+};
 module.exports = {generateAccessToken, verifyAccessToken, verifyAccessTokenFE};
