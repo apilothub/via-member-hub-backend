@@ -15,7 +15,7 @@ class UserController {
                 message: "Internal server error",
             });
         }
-    }
+    }/*test*/
 
     async getUsersById(req, res) {
         try {
