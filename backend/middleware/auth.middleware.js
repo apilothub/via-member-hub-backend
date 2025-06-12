@@ -33,12 +33,12 @@ const checkTokenFE = () => {
 
             const token = authHeader.split(' ')[1];
 
-            const decoded = await auth.verifyAccessTokenFE(token);
+            const decoded =  auth.verifyAccessTokenFE(token);
             if (!decoded) {
                 return res.status(401).json("Invalid Token");
             }
 
-            req.data = decoded;
+            
             next();
         } catch (error) {
             console.error("Token authentication error:", error);
