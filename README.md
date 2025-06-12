@@ -1,33 +1,53 @@
-Xây dựng trang web bán hàng linh kiện điện tử ShopZilla
 
-## Tech stack
+## Cấu trúc thư mục
+- `index.js`: Điểm khởi động ứng dụng
+- `config/`: Cấu hình kết nối database, biến môi trường
+- `controller/`: Xử lý logic cho các route, nhận request và trả response
+- `middleware/`: Các middleware cho Express (xác thực, kiểm tra lỗi, ...)
+- `models/`: Định nghĩa các schema/model cho database (Sequelize)
+- `repositories/`: Xử lý truy vấn dữ liệu, giao tiếp với database
+- `routes/`: Định nghĩa các endpoint API và ánh xạ tới controller
+- `services/`: Chứa các logic nghiệp vụ, xử lý dữ liệu
+- `utils/`: Các hàm tiện ích dùng chung, logger, constants
+- `logs/`: Chứa file log info và error
+- `docs/`: Chứa tài liệu OpenAPI (Swagger)
 
-### Frontend
-- ReactJS
-- Redux
-- Bootstrap
+## Hướng dẫn cài đặt và chạy dự án
 
-### Backend
-- NodeJS
-- Express
+### 1. Clone dự án
+```bash
+git clone https://github.com/apilothub/via-member-hub-backend.git
+```
 
-### Database
-- MongoDB
+### 2. Cài đặt các package cần thiết
+```bash
+npm install
+```
 
-## Chức năng
-### Frontend
-- Sử dụng ReactJS + Redux
+### 3. Thiết lập cấu hình
+- Tạo file `.env` ở thư mục gốc với nội dung ví dụ:
+```
+DB_NAME=Vietnamisawesome
+DB_USER=root
+DB_PASSWORD=1234
+DB_HOST=localhost
+PORT=5000
+JWT_SECRET=your_secret_key
+```
+- Đảm bảo đã tạo database và các bảng cần thiết trong MySQL.
 
-### Backend
-- Sử dụng nodeJS + MongoDB.
-- Sử dụng middleware để check quyền user.
-- Có chức năng đăng ký, đăng nhập, phân quyền user.
-- Mã hóa password user bằng bcrypt.
-- Có chức năng CRUD (Thêm, xóa, sửa, cập nhật) ở các màn hình.
-- Có giả lập chức năng thanh toán.
+### 4. Chạy dự án
+```bash
+npm start
+```
 
-## Hướng dẫn cách chạy
-- Đăng ký paypal sandbox.
-- Install nodejs.
-- Tại thư mục source code chạy `npm install`.
-- Start backend & frontend bằng cách chạy `npm run dev`.
+### 5. Truy cập API
+- Mặc định API sẽ chạy trên `http://localhost:5000`
+- Một số endpoint mẫu:
+  - `GET /api/challenges` — Lấy tất cả postchallenge
+  - `GET /api/challenges/:id` — Lấy chi tiết 1 challenge
+  - (Các endpoint khác xem trong thư mục `routes/`)
+
+
+### 6. Logging
+- Log info và error sẽ được ghi vào thư mục `logs/` (info.log, error.log)

@@ -1,37 +1,50 @@
-import jwt from 'jsonwebtoken'
-import asyncHandler from 'express-async-handler'
-import User from '../models/user.model.js'
+const auth = require("../utils/authToken.js");
+const checkToken = () => {
+    return async (req, res, next) => {
+        try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return res.status(401).json("No token, please login!");
+            }
 
-const protect = asyncHandler(async (req, res, next) => {
-  let token;
+            const token = authHeader.split(' ')[1];
+            const decoded = auth.verifyAccessToken(token);
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select('-password');
-      next();
+            if (!decoded) {
+                return res.status(401).json("Invalid Token");
+            }
 
-    } catch (error) {
-      console.error(error);
-      res.status(401);
-      throw new Error('Not authorized, token failed');
-    }
-  }
+            next(); 
+        } catch (error) {
+            console.error("Token authentication error:", error);
+            return res.status(500).json("Server error during token authentication");
+        }
+    };
+};
 
-  if (!token) {
-    res.status(401);
-    throw new Error('Not authorized, no token');
-  }
-})
 
-const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
-    next();
-  } else {
-    res.status(401);
-    throw new Error('Not authorized as an admin');
-  }
-}
+const checkTokenFE = () => {
+    return async (req, res, next) => {
+        try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return res.status(401).json("No token, please login!");
+            }
 
-export { protect, admin }
+            const token = authHeader.split(' ')[1];
+
+            const decoded =  auth.verifyAccessTokenFE(token);
+            if (!decoded) {
+                return res.status(401).json("Invalid Token");
+            }
+
+            
+            next();
+        } catch (error) {
+            console.error("Token authentication error:", error);
+            return res.status(500).json("Server error during token authentication");
+        }
+    };
+};
+module.exports = {checkTokenFE, checkToken}
+
