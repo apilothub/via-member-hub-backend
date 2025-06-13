@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
     process.env.DB_USER,
     process.env.DB_PASSWORD,    {
         host: process.env.DB_HOST || '5-y2x.h.filess.io',
-        port: process.env.DB_PORT || 3307,
+        port: process.env.DB_PORT || 3306,
         dialect: 'mysql',
         logging: process.env.DB_LOGGING === 'true' ? console.log : false,
         define: {
