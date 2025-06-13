@@ -59,6 +59,10 @@ const Event = sequelize.define("Event", {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
+    ticket_type: {
+        type: DataTypes.ENUM("paid", "free"),
+        allowNull: false
+    },
     max_attendees: {
         type: DataTypes.INTEGER,
         allowNull: false,
