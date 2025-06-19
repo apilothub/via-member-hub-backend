@@ -5,30 +5,30 @@ const CommunityMember = sequelize.define('community_members', {
     community_member_id: {
         type: DataTypes.BIGINT,
         primaryKey: true,
-        autoIncrement: true,
+        allowNull: false,
     },
     first_name: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: true,
     },
     last_name: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: true,
     },
     ten_community_members: {
         type: DataTypes.STRING(255),
-        allowNull: true,
+        allowNull: false,
     },
     email: {
         type: DataTypes.STRING(255),
-        allowNull: true,
+        allowNull: false,
     },
     avatar_url: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     location: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(100),
         allowNull: true,
     },
     description: {
@@ -38,10 +38,11 @@ const CommunityMember = sequelize.define('community_members', {
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
     },
     updated_at: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     posts_count: {
         type: DataTypes.INTEGER,
@@ -55,27 +56,22 @@ const CommunityMember = sequelize.define('community_members', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
-    current_level: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1,
-    },
     current_level_name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: true,
     },
     points_to_next_level: {
         type: DataTypes.INTEGER,
-        defaultValue: 0,
-    },
-    level_progress: {
-        type: DataTypes.DECIMAL(5, 2),
-        defaultValue: 0.0,
+        defaultValue: 10,
     },
 }, {
     tableName: 'community_members',
     timestamps: false,
     indexes: [
-        { fields: ['community_member_id'] }
+        { name: 'idx_email', fields: ['email'] },
+        { name: 'idx_ten_community_members', fields: ['ten_community_members'] },
+        { name: 'idx_created_at', fields: ['created_at'] },
+        { name: 'idx_updated_at', fields: ['updated_at'] },
     ]
 });
 
